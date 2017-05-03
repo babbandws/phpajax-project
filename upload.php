@@ -58,21 +58,23 @@ if ($uploadOk == 0) {
 
 
 // If we couldn't, then it either doesn't exist, or we can't see it.
-if (!mysqli_select_db($con,'my_db')) {
+if (!mysqli_select_db($con, 'my_db')){
     $sql = "CREATE DATABASE IF NOT EXISTS my_db";
- if (!mysqli_query($con, $sql)) {
-    echo "Error creating database: " . mysqli_error($con);
- } 
- }
+     if (mysqli_query($con, $sql)) {
+     echo "database created successfully";
+    } else {
+        echo "Error creating database: " . mysqli_error($con);
+    }
+}
 
 
 $sql = "CREATE TABLE IF NOT EXISTS my_db.images (
-  `id` int(100) unsigned NOT NULL AUTO_INCREMENT,
-  `title` varchar(255) NOT NULL,
-  `filename` varchar(255) NOT NULL,
-  `img_path` varchar(255) NOT NULL,
-  UNIQUE KEY `id` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1;";
+        `id` int(100) unsigned NOT NULL AUTO_INCREMENT,
+        `title` varchar(255) NOT NULL,
+        `filename` varchar(255) NOT NULL,
+        `img_path` varchar(255) NOT NULL,
+        UNIQUE KEY `id` (`id`)
+        ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1;";
 
 
 if (mysqli_query($con, $sql)) {
@@ -82,10 +84,12 @@ if (mysqli_query($con, $sql)) {
 }
 
 $sql = "INSERT INTO images (title,filename,img_path)
-VALUES ('$name','$image','$target_file')";
+    VALUES ('$name','$image','$target_file')";
 
-mysqli_select_db($con, 'images');
-
+$db_selected = mysqli_select_db($con, 'my_db');
+if (!$db_selected) {
+    die ('Can\'t use images : ' . mysqli_error($con));
+}
 
 $retval = mysqli_query($con, $sql);
 if(! $retval ){

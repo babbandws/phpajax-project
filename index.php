@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>php ajax project<title>
+<title>php ajax project</title>
 </head>
 <body>
 

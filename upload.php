@@ -50,7 +50,7 @@ if ($uploadOk == 0) {
     if(!$con ){
          die('Could not connect: ' . mysqli_error($con));
     }    
-}
+
 
 
 $sql = "INSERT INTO images (title,filename,img_path)
@@ -65,6 +65,8 @@ $retval = mysqli_query($con, $sql);
 if(! $retval ){
   die('Could not enter data: ' . mysqli_error($con));
 }   
+
+}
 
 }
 

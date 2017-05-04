@@ -21,6 +21,7 @@ require 'connect.php';
 <?php 
 
 require 'upload.php';
+
 ?>
 <div class="tutorial_list">
 
@@ -37,10 +38,12 @@ if($rowCount > 0){
  
 ?>
 
-<div class="list_item">
-<h1><?php echo $row["title"]; ?></h1>
-<img src="<?php echo $row["img_path"]; ?>" alt="">
+<div class="list_item" id="<?php echo $id; ?>">
+	<h1><?php echo $row["title"]; ?></h1>
+	<img src="<?php echo $row["img_path"]; ?>" alt="">
+	<button id="<?php echo $id; ?>" class="delete">Delete</button> 
 </div>
+
 
 <?php 
 
@@ -60,7 +63,7 @@ if($rowCount > 0){
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script>
 	$(document).ready(function(){
-    $(document).on('click','.show_more',function(){
+    $('body').on('click','.show_more',function(){
         var ID = $(this).attr('id');
         $('.show_more').hide();
         $('.loding').show();
@@ -74,8 +77,25 @@ if($rowCount > 0){
             }
         }); 
     });
+
+
+
+    $('.list_item').on('click','.delete',function(){
+		
+		$(this).fadeOut("slow", function() { $(this).parent().remove(); });
+       	 var ID = $(this).attr('id');
+
+         $.ajax({
+         	type:'POST',
+            url:'delete.php',
+            data:'id='+ID,
+        	   success: function(){
+               		 
+            }
+        });
+     });
+
 });	
 </script>
-
 </body>
 </html>

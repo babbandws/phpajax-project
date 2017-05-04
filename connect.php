@@ -9,11 +9,9 @@ $con = mysqli_connect($dbhost, $dbuser, $dbpass);
 // If we couldn't, then it either doesn't exist, or we can't see it.
 if (!mysqli_select_db($con, 'my_db')){
     $sql = "CREATE DATABASE IF NOT EXISTS my_db";
-     if (mysqli_query($con, $sql)) {
-     echo "database created successfully";
-    } else {
-        echo "Error creating database: " . mysqli_error($con);
-    }
+     if (!mysqli_query($con, $sql)) {
+      echo "Error creating database: " . mysqli_error($con);
+    } 
 }
 
 $sql = "CREATE TABLE IF NOT EXISTS my_db.images (
